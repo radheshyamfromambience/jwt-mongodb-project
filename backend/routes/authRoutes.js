@@ -27,19 +27,19 @@ const generateToken = (user) => {
 
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     // Validate fields
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !role) {
       return res.status(400).json({
         success: false,
-        message: "Name, email and password are required",
+        message: "Name, email, password and role are required",
       });
     }
 
     if (typeof name !== "string" ||
-        typeof email !== "string" ||
-        typeof password !== "string") {
+      typeof email !== "string" ||
+      typeof password !== "string") {
       return res.status(400).json({
         success: false,
         message: "Invalid input",
@@ -84,7 +84,7 @@ router.post("/register", async (req, res) => {
       password: hashedPassword,
 
       // Role is deliberately not accepted from req.body.
-      role: "student",
+      role: role,
     });
 
     // Generate token
